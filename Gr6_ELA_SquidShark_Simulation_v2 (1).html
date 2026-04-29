@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 6 ELA | Squid vs. Shark | Georgia Milestones Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0c2340;--navy2:#163352;--navy3:#1e4976;
+  --teal:#0a8f84;--teal2:#0cbfb1;--teal-bg:#f0fdfa;
+  --amber:#c97d0a;--amber-bg:#fffbeb;--amber2:#f59e0b;
+  --red:#c5202e;--red-bg:#fff1f2;--red2:#f43f5e;
+  --green:#15803d;--green-bg:#f0fdf4;--green2:#22c55e;
+  --slate:#475569;--slate2:#94a3b8;--slate-bg:#f8fafc;
+  --border:#e1e8f0;--border2:#cbd5e1;
+  --white:#fff;--paper:#f5f7fa;
+  --text:#1a2537;--text2:#4a5568;--text3:#8896ab;
+  --shadow:0 1px 8px rgba(12,35,64,.08);
+  --shadow2:0 4px 20px rgba(12,35,64,.12);
+  --shadow3:0 8px 40px rgba(12,35,64,.18);
+  --r:8px;--r2:14px;--r3:20px;
+  --flag:#7c3aed;--flag-bg:#f5f3ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Sora',sans-serif;background:var(--paper);color:var(--text);font-size:14px;line-height:1.6}
+
+/* ── GATE SCREEN ── */
+#gate{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:999;padding:20px}
+.gate-card{background:var(--white);border-radius:var(--r3);padding:44px 48px;max-width:520px;width:100%;box-shadow:var(--shadow3);text-align:center}
+.gate-logo{display:inline-flex;align-items:center;gap:9px;background:var(--navy);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:22px}
+.gate-logo span{color:var(--teal2)}
+.gate-h1{font-family:'Source Serif 4',serif;font-size:32px;font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:6px}
+.gate-h1 em{color:var(--teal);font-style:normal}
+.gate-sub{color:var(--text2);font-size:13px;margin-bottom:28px}
+.gate-fields{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;text-align:left}
+.gate-field label{display:block;font-size:12px;font-weight:600;color:var(--navy);margin-bottom:6px;letter-spacing:.3px}
+.gate-field input,
+.gate-field select{width:100%;border:2px solid var(--border2);border-radius:var(--r);padding:11px 13px;font-size:14px;font-family:'Sora',sans-serif;outline:none;transition:border-color .2s;background:var(--white)}
+.gate-field input:focus,
+.gate-field select:focus{border-color:var(--navy3)}
+.gate-meta{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:24px}
+.gchip{background:var(--slate-bg);color:var(--navy);font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;border:1px solid var(--border)}
+.gate-btn{width:100%;background:var(--navy);color:#fff;border:none;border-radius:var(--r2);padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;transition:background .2s;letter-spacing:.2px}
+.gate-btn:hover{background:var(--navy2)}
+.err-msg{color:var(--red);font-size:12px;margin-top:6px;display:none}
+
+/* ── TOP BAR ── */
+#topbar{height:52px;background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;position:relative;z-index:50}
+.tb-left{display:flex;align-items:center;gap:12px}
+.tb-badge{background:var(--teal);color:#fff;font-size:9px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;padding:3px 8px;border-radius:4px}
+.tb-title{font-size:13px;font-weight:600;color:#fff}.tb-title span{color:var(--teal2)}
+.tb-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px}
+#timer-wrap{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:5px 14px}
+#timer-icon{font-size:14px}
+#timer-display{font-size:17px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:.5px;min-width:56px;text-align:center}
+#timer-wrap.warn #timer-display{color:var(--amber2);animation:pulse 1s ease-in-out infinite}
+#timer-wrap.urgent #timer-display{color:var(--red2);animation:pulse .6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+.tb-right{display:flex;align-items:center;gap:14px}
+.tb-student{font-size:12px;color:rgba(255,255,255,.55)}
+.tb-prog{display:flex;align-items:center;gap:7px;font-size:12px;color:rgba(255,255,255,.6)}
+.prog-outer{width:90px;height:4px;background:rgba(255,255,255,.18);border-radius:2px}
+.prog-inner{height:4px;background:var(--teal2);border-radius:2px;transition:width .35s}
+
+/* ── APP SHELL ── */
+#app{display:none;flex-direction:column;height:100%}
+#app.visible{display:flex}
+#main-area{display:flex;flex:1;overflow:hidden}
+
+/* ── LEFT PANEL — SOURCES ── */
+#left-panel{width:42%;min-width:360px;max-width:560px;background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
+.src-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--slate-bg);flex-shrink:0}
+.st{flex:1;padding:10px 4px;font-size:11px;font-weight:600;text-align:center;cursor:pointer;border:none;background:none;color:var(--text2);transition:.2s;border-bottom:2px solid transparent;letter-spacing:.2px}
+.st:hover{color:var(--navy);background:rgba(12,35,64,.04)}
+.st.active{color:var(--navy);border-bottom-color:var(--teal);background:var(--white)}
+.src-body{flex:1;overflow-y:auto;padding:20px}
+.src-view{display:none}.src-view.active{display:block}
+
+/* source typography */
+.src-title{font-family:'Source Serif 4',serif;font-size:20px;font-weight:700;color:var(--navy);text-align:center;margin-bottom:2px}
+.src-byline{text-align:center;font-size:11px;color:var(--text3);margin-bottom:18px}
+.src-p{font-family:'Source Serif 4',serif;font-size:14px;line-height:1.85;margin-bottom:.85em;color:var(--text)}
+.src-p:last-child{margin-bottom:0}
+.pn{color:var(--teal);font-weight:700;font-size:11px;margin-right:3px}
+.callout{background:#f0f9ff;border-left:3px solid var(--teal2);padding:10px 13px;margin:12px 0;border-radius:0 6px 6px 0;font-size:13px;font-family:'Source Serif 4',serif;line-height:1.65;color:var(--text2);font-style:italic}
+
+/* audio */
+.audio-ctrl{background:var(--slate-bg);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pbtn{background:var(--teal);color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .2s;font-family:'Sora',sans-serif}
+.pbtn:hover{background:#0a7a70}.pbtn:disabled{background:var(--slate2);cursor:not-allowed}
+.rbtn{background:var(--white);color:var(--navy);border:1.5px solid var(--border2);border-radius:6px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;font-family:'Sora',sans-serif}
+.rbtn:hover{border-color:var(--navy)}.rbtn:disabled{opacity:.4;cursor:not-allowed}
+.ast{font-size:11px;color:var(--text3)}
+.cap-area{font-family:'Source Serif 4',serif;font-size:14px;line-height:1.9;min-height:120px}
+.cap-s{opacity:.28;transition:opacity .22s;padding:1px 0}
+.cap-s.active{opacity:1;background:var(--amber-bg);border-radius:3px;padding:1px 4px}
+.cap-s.done{opacity:.65}
+.cap-ph{font-size:13px;color:var(--text3);font-style:italic}
+.listened-ok{display:none;background:var(--green-bg);color:var(--green);font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;margin-top:8px;display:none}
+
+/* chart */
+.chart-wrap{display:flex;justify-content:center;padding:8px 0}
+.c-bars{display:flex;gap:36px;align-items:flex-end;height:150px;border-bottom:2px solid var(--border2);padding-bottom:6px}
+.c-grp{display:flex;flex-direction:column;align-items:center}
+.c-pair{display:flex;gap:7px;align-items:flex-end;height:130px}
+.c-bar{width:26px;border-radius:4px 4px 0 0;position:relative;cursor:default}
+.c-bar::after{content:attr(data-v);position:absolute;top:-22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:10px;padding:2px 5px;border-radius:3px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}
+.c-bar:hover::after{opacity:1}
+.cb-s{background:#163352}.cb-q{background:var(--teal)}
+.c-yr{font-size:11px;color:var(--text3);margin-top:5px}
+.c-legend{display:flex;gap:18px;justify-content:center;margin-bottom:12px;font-size:12px;color:var(--text2)}
+.c-dot{width:11px;height:11px;border-radius:2px;display:inline-block;margin-right:4px;vertical-align:middle}
+.src-header{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.src-header::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ── RIGHT PANEL — QUESTIONS ── */
+#right-panel{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#q-scroll{flex:1;overflow-y:auto;padding:22px 24px}
+
+/* question palette */
+#palette-bar{background:var(--white);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
+.pal-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-right:2px}
+.pal-btn{width:32px;height:32px;border-radius:6px;border:2px solid var(--border2);background:var(--white);font-size:12px;font-weight:600;cursor:pointer;color:var(--text2);transition:.15s;position:relative;font-family:'Sora',sans-serif}
+.pal-btn:hover{border-color:var(--navy);color:var(--navy)}
+.pal-btn.answered{background:var(--navy);border-color:var(--navy);color:#fff}
+.pal-btn.flagged::after{content:'🚩';position:absolute;top:-5px;right:-5px;font-size:9px}
+.pal-btn.current{box-shadow:0 0 0 3px var(--teal2)}
+.pal-sep{width:1px;height:24px;background:var(--border);margin:0 4px}
+.pal-legend{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text3);margin-left:auto}
+.pl-dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:3px;vertical-align:middle}
+
+/* part headers */
+.part-hdr{background:linear-gradient(135deg,var(--navy),var(--navy3));color:#fff;border-radius:var(--r2) var(--r2) 0 0;padding:15px 20px;margin-bottom:0}
+.part-hdr h2{font-size:14px;font-weight:700}.part-hdr p{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px}
+.part-body{background:var(--white);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--r2) var(--r2);padding:20px;margin-bottom:22px}
+
+/* question blocks */
+.qb{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r2);padding:20px;margin-bottom:16px;transition:border-color .2s;scroll-margin-top:12px}
+.qb.current{border-color:var(--teal);box-shadow:0 0 0 3px rgba(10,143,132,.1)}
+.qb.ans-correct{border-left:4px solid var(--green2)}
+.qb.ans-incorrect{border-left:4px solid var(--red2)}
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.q-num{background:var(--navy);color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.q-type{font-size:11px;font-weight:600;color:var(--navy)}
+.q-std{font-size:10px;color:var(--text3);background:var(--slate-bg);padding:2px 7px;border-radius:10px}
+.q-dok{font-size:10px;color:var(--amber);background:var(--amber-bg);padding:2px 7px;border-radius:10px;font-weight:700}
+.q-stem{font-family:'Source Serif 4',serif;font-size:14.5px;line-height:1.75;margin-bottom:14px;color:var(--text)}
+.q-passage{background:var(--slate-bg);border-left:3px solid var(--navy2);border-radius:0 6px 6px 0;padding:12px 15px;margin:10px 0 14px;font-family:'Source Serif 4',serif;font-size:14px;line-height:1.8;color:var(--text)}
+.blank{display:inline-block;min-width:180px;border-bottom:2px dashed var(--navy2);color:var(--text3);font-style:italic;padding:0 3px}
+
+/* flag button */
+.flag-row{display:flex;align-items:center;justify-content:flex-end;margin-bottom:10px}
+.flag-btn{display:flex;align-items:center;gap:5px;background:none;border:1.5px solid var(--border2);border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;color:var(--text3);cursor:pointer;transition:.15s;font-family:'Sora',sans-serif}
+.flag-btn:hover{border-color:var(--flag);color:var(--flag)}
+.flag-btn.flagged{background:var(--flag-bg);border-color:var(--flag);color:var(--flag)}
+
+/* selected response */
+.sr-opts{display:flex;flex-direction:column;gap:8px}
+.sr-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;transition:.15s;font-family:'Source Serif 4',serif;font-size:14px;line-height:1.6}
+.sr-opt:hover{border-color:var(--navy2);background:var(--slate-bg)}
+.sr-opt.sel{border-color:var(--navy);background:#eff6ff}
+.sr-opt.correct{border-color:var(--green2)!important;background:var(--green-bg)!important}
+.sr-opt.wrong{border-color:var(--red2)!important;background:var(--red-bg)!important}
+.sr-let{background:var(--navy);color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.sr-opt.sel .sr-let{background:var(--navy3)}
+.sr-opt.correct .sr-let{background:var(--green)}
+.sr-opt.wrong .sr-let{background:var(--red)}
+
+/* multi-select */
+.ms-note{font-size:11px;color:var(--amber);font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:4px}
+.ms-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;transition:.15s;font-family:'Source Serif 4',serif;font-size:14px;line-height:1.6;margin-bottom:7px}
+.ms-opt:hover{border-color:var(--navy2);background:var(--slate-bg)}
+.ms-opt.sel{border-color:var(--navy);background:#eff6ff}
+.ms-opt.correct{border-color:var(--green2)!important;background:var(--green-bg)!important}
+.ms-opt.wrong{border-color:var(--red2)!important;background:var(--red-bg)!important}
+.ms-chk{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:4px;flex-shrink:0;margin-top:3px;display:flex;align-items:center;justify-content:center;font-size:11px;transition:.15s}
+.ms-opt.sel .ms-chk{background:var(--navy);border-color:var(--navy);color:#fff}
+.ms-opt.correct .ms-chk{background:var(--green);border-color:var(--green);color:#fff}
+.ms-opt.wrong .ms-chk{background:var(--red);border-color:var(--red);color:#fff}
+
+/* drag-drop */
+.dnd-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+.dnd-bank{background:var(--slate-bg);border:1px solid var(--border);border-radius:var(--r);padding:12px}
+.dnd-bank-h{font-size:10px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.chip{background:var(--white);border:1.5px solid var(--border);border-radius:6px;padding:9px 11px;font-family:'Source Serif 4',serif;font-size:12px;line-height:1.5;cursor:grab;margin-bottom:7px;transition:box-shadow .15s;user-select:none}
+.chip:last-child{margin-bottom:0}
+.chip.dragging{opacity:.4;box-shadow:var(--shadow3)}
+.chip.placed{opacity:.3;pointer-events:none}
+.dnd-tgts{display:flex;flex-direction:column;gap:10px}
+.dnd-row{display:grid;grid-template-columns:1fr 130px;gap:8px;align-items:center}
+.dnd-claim{background:var(--navy);color:#fff;border-radius:6px;padding:9px 11px;font-size:12px;line-height:1.45}
+.dnd-drop{min-height:54px;border:2px dashed var(--border2);border-radius:6px;padding:7px;display:flex;align-items:center;justify-content:center;transition:.15s;font-size:11px;color:var(--text3);font-style:italic;text-align:center;line-height:1.4}
+.dnd-drop.over{border-color:var(--teal);background:var(--teal-bg)}
+.dnd-drop.filled{border-style:solid;border-color:var(--navy2);font-style:normal;color:var(--text);background:var(--slate-bg);font-family:'Source Serif 4',serif;font-size:12px}
+.dnd-drop.correct{border-color:var(--green2)!important;background:var(--green-bg)!important}
+.dnd-drop.wrong{border-color:var(--red2)!important;background:var(--red-bg)!important}
+
+/* evidence grid */
+.eg-table{width:100%;border-collapse:collapse;font-size:12px}
+.eg-table th{background:var(--navy);color:#fff;padding:8px 12px;font-weight:600;text-align:center;font-size:11px}
+.eg-table th:first-child{text-align:left;min-width:200px}
+.eg-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.eg-table tr:last-child td{border-bottom:none}
+.eg-table tr:hover td{background:var(--slate-bg)}
+.eg-table td:first-child{font-family:'Source Serif 4',serif;line-height:1.55;font-size:13px}
+.gc{text-align:center}.gr{width:17px;height:17px;cursor:pointer;accent-color:var(--navy)}
+.eg-table tr.rr-ok td{background:var(--green-bg)!important}
+.eg-table tr.rr-bad td{background:var(--red-bg)!important}
+
+/* bracket */
+.br-para{font-family:'Source Serif 4',serif;font-size:14.5px;line-height:2.1}
+.bc{display:inline-flex;border:2px solid var(--navy2);border-radius:5px;overflow:hidden;margin:0 2px;vertical-align:middle}
+.bco{padding:2px 9px;cursor:pointer;transition:.12s;font-size:13px;white-space:nowrap;border-right:1px solid var(--navy2);line-height:1.5}
+.bco:last-child{border-right:none}
+.bco:hover{background:var(--slate-bg)}
+.bco.sel{background:var(--navy);color:#fff}
+.bco.correct{background:var(--green)!important;color:#fff!important}
+.bco.wrong{background:var(--red)!important;color:#fff!important}
+
+/* feedback inline */
+.fb{border-radius:var(--r);padding:9px 13px;font-size:12px;margin-top:10px;display:none;line-height:1.5}
+.fb.show{display:flex;align-items:flex-start;gap:8px}
+.fb-ok{background:var(--green-bg);border:1px solid #86efac;color:#14532d}
+.fb-bad{background:var(--red-bg);border:1px solid #fca5a5;color:#7f1d1d}
+.fb-icon{font-size:14px;flex-shrink:0}
+
+/* nav buttons */
+.nav-row{display:flex;align-items:center;justify-content:space-between;margin-top:20px;gap:10px;padding-bottom:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:none;transition:.18s;font-family:'Sora',sans-serif}
+.btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:var(--navy2)}
+.btn-outline{background:var(--white);color:var(--navy);border:1.5px solid var(--border2)}.btn-outline:hover{border-color:var(--navy)}
+.btn-teal{background:var(--teal);color:#fff}.btn-teal:hover{background:#0a7a70}
+.btn-lg{padding:12px 26px;font-size:14px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* warn note */
+.warn{background:var(--amber-bg);border:1px solid #fcd34d;border-radius:var(--r);padding:9px 13px;font-size:12px;color:#78350f;margin-bottom:14px}
+
+/* ── SUBMIT SCREEN ── */
+#s-submit{display:none;flex:1;overflow-y:auto;padding:28px}
+.sub-card{max-width:620px;margin:0 auto;background:var(--white);border:1px solid var(--border);border-radius:var(--r3);overflow:hidden;box-shadow:var(--shadow2)}
+.sub-head{background:var(--navy);color:#fff;padding:20px 24px}
+.sub-head h2{font-size:16px;font-weight:700}.sub-head p{font-size:12px;color:rgba(255,255,255,.6);margin-top:2px}
+.sub-body{padding:22px 24px}
+.rev-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.rev-row:last-child{border-bottom:none}
+.rev-status{font-size:11px;font-weight:700}
+.rs-done{color:var(--green)}.rs-pend{color:var(--amber)}
+.sub-foot{padding:18px 24px;border-top:1px solid var(--border);text-align:center;background:var(--slate-bg)}
+.sub-foot p{color:var(--text2);font-size:13px;margin-bottom:14px}
+#submitStatus{font-size:12px;color:var(--text3);min-height:18px;margin-top:8px}
+
+/* ── RESULTS SCREEN ── */
+#s-results{display:none;flex:1;overflow-y:auto;padding:24px}
+.res-wrap{max-width:820px;margin:0 auto}
+.score-hero{background:var(--navy);border-radius:var(--r3);padding:32px 28px;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:20px;align-items:center}
+.sh-left{text-align:center}
+.sh-pct{font-size:68px;font-weight:700;font-family:'Source Serif 4',serif;color:#fff;line-height:1}
+.sh-pts{font-size:14px;color:rgba(255,255,255,.6);margin-top:4px}
+.sh-band{display:inline-block;margin-top:12px;padding:6px 18px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:.3px}
+.b-d{background:#86efac;color:#14532d}.b-p{background:#fde68a;color:#78350f}
+.b-dev{background:#fed7aa;color:#7c2d12}.b-b{background:#fca5a5;color:#7f1d1d}
+.sh-right{}
+.sh-meta{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:8px}
+.sh-meta strong{color:#fff}
+
+/* domain bar chart */
+.domain-chart{background:var(--white);border:1px solid var(--border);border-radius:var(--r2);padding:20px;margin-bottom:18px}
+.dc-title{font-size:13px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.6px;margin-bottom:16px}
+.dc-row{display:grid;grid-template-columns:180px 1fr 36px;gap:10px;align-items:center;margin-bottom:10px}
+.dc-row:last-child{margin-bottom:0}
+.dc-lbl{font-size:12px;color:var(--navy);font-weight:600;text-align:right}
+.dc-bar-outer{height:22px;background:var(--slate-bg);border-radius:4px;overflow:hidden}
+.dc-bar-inner{height:100%;border-radius:4px;transition:width .6s ease;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:#fff;min-width:24px}
+.dc-pct{font-size:12px;font-weight:700;color:var(--navy)}
+
+/* answer review */
+.ans-review{background:var(--white);border:1px solid var(--border);border-radius:var(--r2);padding:20px;margin-bottom:18px}
+.ar-title{font-size:13px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.ar-sub{font-size:12px;color:var(--text3);margin-bottom:14px}
+.ar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ar-item{border:1.5px solid var(--border);border-radius:var(--r);padding:12px;text-align:center}
+.ar-item.ok{border-color:var(--green2);background:var(--green-bg)}
+.ar-item.bad{border-color:var(--red2);background:var(--red-bg)}
+.ar-item.partial{border-color:var(--amber2);background:var(--amber-bg)}
+.ar-qn{font-size:11px;font-weight:700;color:var(--text3);margin-bottom:4px}
+.ar-icon{font-size:20px;margin-bottom:3px}
+.ar-lbl{font-size:11px;font-weight:600}
+.ar-item.ok .ar-lbl{color:var(--green)}.ar-item.bad .ar-lbl{color:var(--red)}.ar-item.partial .ar-lbl{color:var(--amber)}
+.ar-std{font-size:10px;color:var(--text3);margin-top:3px}
+.ar-pts{font-size:12px;font-weight:700;color:var(--navy);margin-top:4px}
+
+/* flagged vocab */
+.flag-review{background:var(--white);border:1px solid var(--border);border-radius:var(--r2);padding:20px;margin-bottom:18px}
+.fr-title{font-size:13px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.fr-title::before{content:'🚩'}
+.fr-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--flag-bg);border:1px solid #ddd6fe;border-radius:var(--r);margin-bottom:7px;font-size:13px}
+.fr-item:last-child{margin-bottom:0}
+.fr-q{font-weight:700;color:var(--flag)}
+.fr-std{font-size:11px;color:var(--text3)}
+.fr-none{font-size:13px;color:var(--text3);font-style:italic}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- ══════════ GATE ══════════ -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">🌊 Georgia Milestones <span>EOG Practice</span></div>
+    <div class="gate-h1">Squid vs.<br><em>Shark</em></div>
+    <div class="gate-sub">Grade 6 ELA · Peer Revision Research Task</div>
+    <div class="gate-meta">
+      <span class="gchip">📖 Grade 6 ELA</span>
+      <span class="gchip">⏱ 50 Minutes</span>
+      <span class="gchip">📝 8 Questions · 16 pts</span>
+      <span class="gchip">DOK 2–3</span>
+    </div>
+    <div class="gate-fields">
+      <div class="gate-field">
+        <label for="g-name">First and Last Name</label>
+        <input type="text" id="g-name" placeholder="e.g. Maya Johnson" autocomplete="off">
+        <div class="err-msg" id="err-name">Please enter your full name.</div>
+      </div>
+      <div class="gate-field">
+        <label for="g-period">Class Period</label>
+        <select id="g-period">
+          <option value="">— Select your class period —</option>
+          <option value="1st">1st Period</option>
+          <option value="2nd">2nd Period</option>
+          <option value="3rd">3rd Period</option>
+          <option value="4th">4th Period</option>
+          <option value="5th">5th Period</option>
+          <option value="6th">6th Period</option>
+          <option value="7th">7th Period</option>
+        </select>
+        <div class="err-msg" id="err-period">Please select your class period.</div>
+      </div>
+    </div>
+    <button class="gate-btn" onclick="startSim()">Begin Assessment →</button>
+  </div>
+</div>
+
+<!-- ══════════ APP ══════════ -->
+<div id="app">
+
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <div class="tb-left">
+      <span class="tb-badge">Georgia Milestones</span>
+      <span class="tb-title">Grade 6 ELA — <span>Squid vs. Shark</span></span>
+    </div>
+    <div class="tb-center">
+      <div id="timer-wrap">
+        <span id="timer-icon">⏱</span>
+        <span id="timer-display">50:00</span>
+      </div>
+    </div>
+    <div class="tb-right">
+      <div class="tb-prog">
+        <div class="prog-outer"><div class="prog-inner" id="progBar" style="width:0%"></div></div>
+        <span id="progLbl">0/8</span>
+      </div>
+      <span class="tb-student" id="tb-name"></span>
+    </div>
+  </div>
+
+  <!-- MAIN AREA -->
+  <div id="main-area">
+
+    <!-- LEFT: SOURCES -->
+    <div id="left-panel">
+      <div class="src-tabs">
+        <button class="st active" onclick="showSrc(0)">📄 Source 1</button>
+        <button class="st" onclick="showSrc(1)">🔊 Source 2</button>
+        <button class="st" onclick="showSrc(2)">📊 Source 3</button>
+      </div>
+      <div class="src-body">
+
+        <!-- SRC 1 -->
+        <div class="src-view active" id="sv0">
+          <div class="src-header">Source 1 — Science Article</div>
+          <div class="src-title">Teeth vs. Tentacles</div>
+          <div class="src-byline">By Phillip Jones</div>
+          <p class="src-p"><span class="pn">1</span>Among fish, great white sharks are the largest predators on the planet. They weigh up to 5,000 pounds and can grow longer than 20 feet. With their streamlined bodies and powerful tails, great white sharks are built for speed. Swimming up to 35 miles per hour, they slice through the ocean like a hot knife through butter. As they bear down on their prey, great white sharks can use their powerful muscles to leap out of the water.</p>
+          <p class="src-p"><span class="pn">2</span>Scientists think that great white sharks are intelligent hunters. The animals learn quickly, and they cooperate and hunt in groups. A good brain is essential, considering that sharks hunt dolphins, seals, and other cunning animals.</p>
+          <p class="src-p"><span class="pn">3</span>Great white sharks also are equipped with many senses. Their eyes provide acute vision even in very low light, while their sensitive ears can detect a tiny vibration in the water made by the movement of prey. A great white shark's sense of smell is legendary. Great whites can sniff out a single drop of blood floating in 10 billion drops of water (Furstinger, 2013). Sharks have another important sense: they can detect the direction and strength of electrical currents generated by nearby prey as it moves.</p>
+          <div class="callout">Great white sharks have many rows of teeth — about 300 in total. The rows in the back replace teeth that are worn down or broken. Their bite pressure is 4,000 pounds per inch.</div>
+          <p class="src-p"><span class="pn">4</span>The giant squid is another ferocious predator. The largest giant squid had a length of about 43 feet and might have weighed about a ton. More typically, giant squids mature to 33 feet long and weigh about 450 pounds. A giant squid possesses the largest eyes in the animal kingdom, measuring about one foot in diameter. The huge eyes enable the squid to distinguish prey in the dark.</p>
+          <p class="src-p"><span class="pn">5</span>A giant squid can capture prey up to 33 feet away by propelling two feeding tentacles that have powerful suckers ringed with sharp, serrated edges. The tentacles transfer the prey to eight arms covered with toothed suckers. Then, the arms transport the prey to a parrot-like beak, located between the eight arms and tentacles. The squid uses the beak to kill prey and dismember it. The deadly beak is strong enough to bite through steel cable.</p>
+          <div class="callout">Giant squids sneak up on their prey or chase it. Their tentacles wrap around their prey to keep it from getting away. Using their beaks, they tear apart and eat their food.</div>
+        </div>
+
+        <!-- SRC 2 -->
+        <div class="src-view" id="sv1">
+          <div class="src-header">Source 2 — Audio</div>
+          <div class="src-title" style="font-size:17px">Swimming with Sea Creatures</div>
+          <div class="src-byline">By Cassie Logan</div>
+          <div class="audio-ctrl">
+            <button class="pbtn" id="playBtn" onclick="toggleAudio()"><span id="pIcon">▶</span><span id="pLbl">Play Audio</span></button>
+            <button class="rbtn" id="replayBtn" onclick="replayAudio()" disabled>↺ Replay</button>
+            <span class="ast" id="ast">Press Play to begin.</span>
+          </div>
+          <div id="listenOk" style="display:none;background:var(--green-bg);color:var(--green);font-size:11px;font-weight:700;padding:4px 10px;border-radius:5px;margin-bottom:10px;display:none">✔ You have listened to this source.</div>
+          <div class="cap-area" id="capArea">
+            <span class="cap-ph" id="capPh">Captions will appear here when you press Play.</span>
+          </div>
+        </div>
+
+        <!-- SRC 3 -->
+        <div class="src-view" id="sv2">
+          <div class="src-header">Source 3 — Data Chart</div>
+          <div class="src-title" style="font-size:17px">Recorded Ocean Creature Attacks</div>
+          <div class="src-byline">By Jorge Desoto-Lucas · 2014–2016</div>
+          <div class="c-legend">
+            <span><span class="c-dot" style="background:#163352"></span>Great White Shark</span>
+            <span><span class="c-dot" style="background:var(--teal)"></span>Giant Squid</span>
+          </div>
+          <div class="chart-wrap">
+            <div class="c-bars">
+              <div class="c-grp"><div class="c-pair"><div class="c-bar cb-s" style="height:104px" data-v="8 attacks"></div><div class="c-bar cb-q" style="height:0" data-v="0 attacks"></div></div><div class="c-yr">2014</div></div>
+              <div class="c-grp"><div class="c-pair"><div class="c-bar cb-s" style="height:91px" data-v="7 attacks"></div><div class="c-bar cb-q" style="height:13px" data-v="1 attack"></div></div><div class="c-yr">2015</div></div>
+              <div class="c-grp"><div class="c-pair"><div class="c-bar cb-s" style="height:117px" data-v="9 attacks"></div><div class="c-bar cb-q" style="height:0" data-v="0 attacks"></div></div><div class="c-yr">2016</div></div>
+            </div>
+          </div>
+          <p style="text-align:center;font-size:11px;color:var(--text3);margin-top:10px">Unprovoked attacks on record by year. Hover bars for values.</p>
+        </div>
+
+      </div>
+    </div><!-- /left-panel -->
+
+    <!-- RIGHT: QUESTIONS -->
+    <div id="right-panel">
+      <!-- palette -->
+      <div id="palette-bar">
+        <span class="pal-label">Questions</span>
+        <button class="pal-btn current" id="pb1" onclick="scrollToQ(1)">1</button>
+        <button class="pal-btn" id="pb2" onclick="scrollToQ(2)">2</button>
+        <button class="pal-btn" id="pb3" onclick="scrollToQ(3)">3</button>
+        <div class="pal-sep"></div>
+        <button class="pal-btn" id="pb4" onclick="scrollToQ(4)">4</button>
+        <button class="pal-btn" id="pb5" onclick="scrollToQ(5)">5</button>
+        <button class="pal-btn" id="pb6" onclick="scrollToQ(6)">6</button>
+        <button class="pal-btn" id="pb7" onclick="scrollToQ(7)">7</button>
+        <button class="pal-btn" id="pb8" onclick="scrollToQ(8)">8</button>
+        <div class="pal-legend">
+          <span><span class="pl-dot" style="background:var(--navy)"></span>Answered</span>
+          <span><span class="pl-dot" style="background:var(--white);border:1.5px solid var(--border2)"></span>Unanswered</span>
+          <span>🚩 Flagged</span>
+        </div>
+      </div>
+
+      <!-- scrollable q area -->
+      <div id="q-scroll">
+
+        <!-- PART 1 -->
+        <div class="part-hdr"><h2>Part 1: Selected-Response &amp; Technology-Enhanced</h2><p>Answer three questions about the sources.</p></div>
+        <div class="part-body">
+
+          <!-- Q1 -->
+          <div class="qb" id="qb1">
+            <div class="q-meta"><div class="q-num">1</div><span class="q-type">Selected Response</span><span class="q-std">6.T.T.2.a</span><span class="q-dok">DOK 2</span></div>
+            <div class="flag-row"><button class="flag-btn" id="fl1" onclick="toggleFlag(1)">🚩 Flag for Vocabulary</button></div>
+            <div class="q-stem">Which detail from Source #1 <strong>BEST</strong> supports the idea that great white sharks are extremely dangerous predators?</div>
+            <div class="sr-opts" id="q1o">
+              <div class="sr-opt" onclick="pickSR('q1','A',this)"><div class="sr-let">A</div><div>Great white sharks sometimes swim in groups.</div></div>
+              <div class="sr-opt" onclick="pickSR('q1','B',this)"><div class="sr-let">B</div><div>Great white sharks can leap out of the water using their powerful muscles.</div></div>
+              <div class="sr-opt" onclick="pickSR('q1','C',this)"><div class="sr-let">C</div><div>Great white sharks weigh more than 5,000 pounds.</div></div>
+              <div class="sr-opt" onclick="pickSR('q1','D',this)"><div class="sr-let">D</div><div>Great white sharks can detect electrical currents made by moving animals.</div></div>
+            </div>
+            <div class="fb" id="fb1"></div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="qb" id="qb2">
+            <div class="q-meta"><div class="q-num">2</div><span class="q-type">Drag and Drop</span><span class="q-std">6.T.T.3.a</span><span class="q-dok">DOK 2</span></div>
+            <div class="flag-row"><button class="flag-btn" id="fl2" onclick="toggleFlag(2)">🚩 Flag for Vocabulary</button></div>
+            <div class="q-stem">Determine how the author of Source #2 uses argumentative techniques. <strong>Drag</strong> each evidence sentence to the claim it best supports.</div>
+            <div class="dnd-wrap">
+              <div class="dnd-bank">
+                <div class="dnd-bank-h">Evidence Bank</div>
+                <div class="chip" id="chA" draggable="true" data-val="sd" ondragstart="ds(event)" ondragend="de(event)">The author includes real-life encounters with sharks (Ash Gibb, Jannick Schroder) and describes shark features like size, speed, and biting power.</div>
+                <div class="chip" id="chB" draggable="true" data-val="sq" ondragstart="ds(event)" ondragend="de(event)">The author shares a real event with French sailors and a giant squid grabbing their boat, using a sailor's quote to show how strong and scary the squid was.</div>
+                <div class="chip" id="chC" draggable="true" data-val="sn" ondragstart="ds(event)" ondragend="de(event)">The author uses a quote from Ash Gibb saying sharks take "sample bites" and that humans aren't really their food, which helps explain shark behavior.</div>
+              </div>
+              <div class="dnd-tgts">
+                <div class="dnd-row"><div class="dnd-claim">Great white sharks are powerful and dangerous predators.</div><div class="dnd-drop" id="dr-sd" data-t="sd" ondragover="dov(event)" ondragleave="dlv(event)" ondrop="ddrop(event)">Drop here</div></div>
+                <div class="dnd-row"><div class="dnd-claim">Giant squid can be threatening in rare encounters.</div><div class="dnd-drop" id="dr-sq" data-t="sq" ondragover="dov(event)" ondragleave="dlv(event)" ondrop="ddrop(event)">Drop here</div></div>
+                <div class="dnd-row"><div class="dnd-claim">Sharks don't usually hunt humans on purpose.</div><div class="dnd-drop" id="dr-sn" data-t="sn" ondragover="dov(event)" ondragleave="dlv(event)" ondrop="ddrop(event)">Drop here</div></div>
+              </div>
+            </div>
+            <div class="fb" id="fb2"></div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="qb" id="qb3">
+            <div class="q-meta"><div class="q-num">3</div><span class="q-type">Evidence Grid</span><span class="q-std">6.T.RA.2.b</span><span class="q-dok">DOK 2</span></div>
+            <div class="flag-row"><button class="flag-btn" id="fl3" onclick="toggleFlag(3)">🚩 Flag for Vocabulary</button></div>
+            <div class="q-stem">Select <strong>one box in each row</strong> to show whether the author of Source #2, the author of Source #3, or both authors include the information described.</div>
+            <table class="eg-table">
+              <thead><tr><th>Information</th><th>Source #2 Only</th><th>Source #3 Only</th><th>Both Sources</th></tr></thead>
+              <tbody>
+                <tr id="r1"><td>A chart comparing the number of attacks by sharks and squids from 2014–2016</td><td class="gc"><input type="radio" class="gr" name="r1" value="S2" onchange="pickGrid('r1',this.value)"></td><td class="gc"><input type="radio" class="gr" name="r1" value="S3" onchange="pickGrid('r1',this.value)"></td><td class="gc"><input type="radio" class="gr" name="r1" value="Bo" onchange="pickGrid('r1',this.value)"></td></tr>
+                <tr id="r2"><td>A real-life story of a filmmaker's encounter with a great white shark while diving</td><td class="gc"><input type="radio" class="gr" name="r2" value="S2" onchange="pickGrid('r2',this.value)"></td><td class="gc"><input type="radio" class="gr" name="r2" value="S3" onchange="pickGrid('r2',this.value)"></td><td class="gc"><input type="radio" class="gr" name="r2" value="Bo" onchange="pickGrid('r2',this.value)"></td></tr>
+                <tr id="r3"><td>Information supporting the idea that great white sharks are dangerous to humans</td><td class="gc"><input type="radio" class="gr" name="r3" value="S2" onchange="pickGrid('r3',this.value)"></td><td class="gc"><input type="radio" class="gr" name="r3" value="S3" onchange="pickGrid('r3',this.value)"></td><td class="gc"><input type="radio" class="gr" name="r3" value="Bo" onchange="pickGrid('r3',this.value)"></td></tr>
+              </tbody>
+            </table>
+            <div class="fb" id="fb3"></div>
+          </div>
+
+        </div><!-- /part1 body -->
+
+        <!-- PART 2 -->
+        <div class="part-hdr"><h2>Part 2: Peer Revision Task</h2><p>Five questions about revising your group's draft research text.</p></div>
+        <div class="part-body">
+          <div class="warn">📌 <strong>Peer Reviewer Role:</strong> Read each draft passage carefully. Sources remain available in the left panel at all times.</div>
+
+          <!-- Q4 -->
+          <div class="qb" id="qb4">
+            <div class="q-meta"><div class="q-num">4</div><span class="q-type">Selected Response — Revise the Introduction</span><span class="q-std">6.T.SS.1.d</span><span class="q-dok">DOK 3</span></div>
+            <div class="flag-row"><button class="flag-btn" id="fl4" onclick="toggleFlag(4)">🚩 Flag for Vocabulary</button></div>
+            <div class="q-stem">A strong introduction should (1) identify an audience and (2) present a clearly worded claim. Which option <strong>BEST</strong> revises the bold sentence to clearly state a strong claim answering the research question?</div>
+            <div class="q-passage">Deep in the ocean, powerful predators swim silently through the water, each with unique traits that make them both fascinating and frightening. Two of the most well-known creatures are the great white shark and the giant squid. While both have been known to interact with humans, shark encounters have been much more dangerous than squid. <strong>That is why this topic is very important to think about and understand.</strong></div>
+            <div class="sr-opts" id="q4o">
+              <div class="sr-opt" onclick="pickSR('q4','A',this)"><div class="sr-let">A</div><div>That is why it is important to understand which animal is more dangerous to people and how they act in the ocean.</div></div>
+              <div class="sr-opt" onclick="pickSR('q4','B',this)"><div class="sr-let">B</div><div>This shows that the great white shark is a more dangerous animal to encounter than the giant squid.</div></div>
+              <div class="sr-opt" onclick="pickSR('q4','C',this)"><div class="sr-let">C</div><div>We need to study both animals before we decide which one is scarier.</div></div>
+              <div class="sr-opt" onclick="pickSR('q4','D',this)"><div class="sr-let">D</div><div>People have many different ideas about ocean creatures, and both of these are dangerous sometimes.</div></div>
+            </div>
+            <div class="fb" id="fb4"></div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="qb" id="qb5">
+            <div class="q-meta"><div class="q-num">5</div><span class="q-type">Multi-Select — Narrative Techniques</span><span class="q-std">6.T.T.1.e</span><span class="q-dok">DOK 3</span></div>
+            <div class="flag-row"><button class="flag-btn" id="fl5" onclick="toggleFlag(5)">🚩 Flag for Vocabulary</button></div>
+            <div class="q-stem">Your group wants to use narrative techniques to engage the audience and support the claim that the great white shark is more dangerous to encounter. Which <strong>TWO</strong> sentences should be added to BEST achieve this purpose?</div>
+            <div class="ms-note">⚠ Select exactly TWO answers.</div>
+            <div id="q5o">
+              <div class="ms-opt" onclick="pickMS('A',this)"><div class="ms-chk" id="ck-A"></div><div><strong>A.</strong> A swimmer looks out at the ocean and sees a shadow gliding beneath the waves, then calmly wades back to shore.</div></div>
+              <div class="ms-opt" onclick="pickMS('B',this)"><div class="ms-chk" id="ck-B"></div><div><strong>B.</strong> While filming in deep water, a diver feels something slam into his back — it's a great white shark investigating with a powerful "bump."</div></div>
+              <div class="ms-opt" onclick="pickMS('C',this)"><div class="ms-chk" id="ck-C"></div><div><strong>C.</strong> On a calm day at sea, a crew observes a squid in the distance drifting silently with the current.</div></div>
+              <div class="ms-opt" onclick="pickMS('D',this)"><div class="ms-chk" id="ck-D"></div><div><strong>D.</strong> The shark's massive body circles once, then disappears, leaving the diver frozen with fear and unsure if it will return.</div></div>
+              <div class="ms-opt" onclick="pickMS('E',this)"><div class="ms-chk" id="ck-E"></div><div><strong>E.</strong> A giant squid wraps its tentacle around the hull of a boat but releases its grip after a few moments and swims away.</div></div>
+            </div>
+            <div class="fb" id="fb5"></div>
+          </div>
+
+          <!-- Q6 -->
+          <div class="qb" id="qb6">
+            <div class="q-meta"><div class="q-num">6</div><span class="q-type">Selected Response — Add Evidence</span><span class="q-std">6.T.T.3.c</span><span class="q-dok">DOK 3</span></div>
+            <div class="flag-row"><button class="flag-btn" id="fl6" onclick="toggleFlag(6)">🚩 Flag for Vocabulary</button></div>
+            <div class="q-stem">Which additional information should be added to the blank to clearly connect the description to supporting evidence?</div>
+            <div class="q-passage">One of the main reasons sharks are so dangerous is that their bites can cause serious injury — even when they are not trying to eat humans. Imagine you are diving near the coast and suddenly see a giant shape swimming toward you. Before you can react, it circles back and bumps your side. You freeze in fear. The animal is a great white shark. It's not attacking — yet — but it is investigating. Great whites sometimes take "sample bites" out of unfamiliar creatures, including humans. <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>. These sample bites can still result in severe injuries or even death because of the shark's size and power.</div>
+            <div class="sr-opts" id="q6o">
+              <div class="sr-opt" onclick="pickSR('q6','A',this)"><div class="sr-let">A</div><div>The author of Source #1 says that squid use sharp tentacles and a beak to tear apart their food underwater.</div></div>
+              <div class="sr-opt" onclick="pickSR('q6','B',this)"><div class="sr-let">B</div><div>According to Source #2, the filmmaker Ash Gibb was bumped by a shark in Australia and said he had to remain calm so it wouldn't attack.</div></div>
+              <div class="sr-opt" onclick="pickSR('q6','C',this)"><div class="sr-let">C</div><div>The chart in Source #3 shows that sharks are responsible for far more unprovoked attacks than giant squid.</div></div>
+              <div class="sr-opt" onclick="pickSR('q6','D',this)"><div class="sr-let">D</div><div>Source #2 says a squid once latched onto a sailboat and wouldn't let go until the boat stopped moving.</div></div>
+            </div>
+            <div class="fb" id="fb6"></div>
+          </div>
+
+          <!-- Q7 -->
+          <div class="qb" id="qb7">
+            <div class="q-meta"><div class="q-num">7</div><span class="q-type">Bracket Choices — Text Cohesion</span><span class="q-std">6.T.SS.1.c</span><span class="q-dok">DOK 2</span></div>
+            <div class="flag-row"><button class="flag-btn" id="fl7" onclick="toggleFlag(7)">🚩 Flag for Vocabulary</button></div>
+            <div class="q-stem"><strong>Click</strong> the word or phrase in each bracket that BEST connects terms and ideas in the text.</div>
+            <div class="q-passage br-para">Another reason the great white shark is a more dangerous animal to encounter is because of its powerful senses. <span class="bc"><span class="bco" data-q="q7" data-p="1" data-v="However" onclick="pickBr(this)">However</span><span class="bco" data-q="q7" data-p="1" data-v="In fact" onclick="pickBr(this)">In fact</span></span>, these advanced senses allow the shark to hunt successfully in dark or murky water. <span class="bc"><span class="bco" data-q="q7" data-p="2" data-v="Additionally" onclick="pickBr(this)">Additionally</span><span class="bco" data-q="q7" data-p="2" data-v="On the other hand" onclick="pickBr(this)">On the other hand</span></span>, its ability to smell a single drop of blood in billions of drops of water, and detect electrical currents from prey, makes it a fierce predator. These abilities give the great white shark an enormous advantage in the wild.</div>
+            <div class="fb" id="fb7"></div>
+          </div>
+
+          <!-- Q8 -->
+          <div class="qb" id="qb8">
+            <div class="q-meta"><div class="q-num">8</div><span class="q-type">Bracket Choices — Grammar &amp; Syntax</span><span class="q-std">6.L.GC.2.b / 6.L.GC.2.c</span><span class="q-dok">DOK 2</span></div>
+            <div class="flag-row"><button class="flag-btn" id="fl8" onclick="toggleFlag(8)">🚩 Flag for Vocabulary</button></div>
+            <div class="q-stem"><strong>Click</strong> the words, phrases, or punctuation within each bracket that are correct.</div>
+            <div class="q-passage br-para">Great white sharks are among the most feared ocean predators because <span class="bc"><span class="bco" data-q="q8" data-p="1" data-v="it" onclick="pickBr(this)">it</span><span class="bco" data-q="q8" data-p="1" data-v="this species" onclick="pickBr(this)">this species</span></span> has incredible strength and speed. <span class="bc"><span class="bco" data-q="q8" data-p="2" data-v="Because great white sharks can swim at speeds up to 35 miles per hour" onclick="pickBr(this)">Because great white sharks can swim at speeds up to 35 miles per hour</span><span class="bco" data-q="q8" data-p="2" data-v="Swimming at speeds up to 35 miles per hour" onclick="pickBr(this)">Swimming at speeds up to 35 miles per hour</span></span>, their prey often don't stand a chance. The shark's multiple rows of serrated teeth can tear through flesh with ease, making it a serious threat to anyone who crosses their path. According to the <span class="bc"><span class="bco" data-q="q8" data-p="3" data-v="U.S. Fish and Wildlife" onclick="pickBr(this)">U.S. Fish and Wildlife</span><span class="bco" data-q="q8" data-p="3" data-v="u.s Fish and wildlife" onclick="pickBr(this)">u.s Fish and wildlife</span></span> Service, great whites can weigh over 5,000 pounds and grow up to 20 feet in length.</div>
+            <div class="fb" id="fb8"></div>
+          </div>
+
+          <div class="nav-row">
+            <div></div>
+            <button class="btn btn-teal btn-lg" onclick="openSubmit()">Review &amp; Submit →</button>
+          </div>
+
+        </div><!-- /part2 body -->
+      </div><!-- /q-scroll -->
+
+      <!-- SUBMIT -->
+      <div id="s-submit">
+        <div class="sub-card">
+          <div class="sub-head"><h2>Review &amp; Submit</h2><p>Confirm your answers below, then submit.</p></div>
+          <div class="sub-body" id="rev-summary"></div>
+          <div class="sub-foot">
+            <p>Once you submit, you cannot change your answers. Your score will display immediately.</p>
+            <button class="btn btn-teal btn-lg" onclick="doSubmit()" id="subBtn">Submit Assessment ✓</button>
+            <div id="submitStatus"></div>
+          </div>
+        </div>
+        <div style="max-width:620px;margin:14px auto 0;display:flex;justify-content:flex-start">
+          <button class="btn btn-outline" onclick="closeSubmit()">← Back to Questions</button>
+        </div>
+      </div>
+
+      <!-- RESULTS -->
+      <div id="s-results">
+        <div class="res-wrap">
+          <!-- hero -->
+          <div class="score-hero">
+            <div class="sh-left">
+              <div class="sh-pct" id="rPct">--</div>
+              <div class="sh-pts" id="rPts">-- / 16 points</div>
+              <span class="sh-band" id="rBand"></span>
+            </div>
+            <div class="sh-right">
+              <div class="sh-meta" style="margin-bottom:14px"><strong id="rName">--</strong> &bull; <span id="rPeriod">--</span></div>
+              <div class="sh-meta">Questions Answered: <strong id="rAns">--</strong> of 8</div>
+              <div class="sh-meta">Items Flagged: <strong id="rFlagged">--</strong></div>
+              <div class="sh-meta">Time Used: <strong id="rTime">--</strong></div>
+            </div>
+          </div>
+          <!-- domain chart -->
+          <div class="domain-chart">
+            <div class="dc-title">Domain Performance</div>
+            <div id="domainBars"></div>
+          </div>
+          <!-- answer review -->
+          <div class="ans-review">
+            <div class="ar-title">Answer Review</div>
+            <div class="ar-sub">Right ✓ or wrong ✗ only — no correct answers shown.</div>
+            <div class="ar-grid" id="arGrid"></div>
+          </div>
+          <!-- flagged vocab -->
+          <div class="flag-review">
+            <div class="fr-title">Flagged Vocabulary Items</div>
+            <div id="frList"></div>
+          </div>
+          <div style="text-align:center;padding-bottom:24px">
+            <button class="btn btn-outline" onclick="location.reload()">Start Over</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /right-panel -->
+  </div><!-- /main-area -->
+</div><!-- /app -->
+
+<script>
+const WEBAPP="https://script.google.com/macros/s/AKfycbw1CiiFkF1tVL72MBjz3w9PJkc_ou-Hh8FiNxVoE564VJefdssaBHa3EtkA1Y7jLYL4fw/exec";
+
+// ── STATE ─────────────────────────────────────────────
+const S={
+  name:'',period:'',session:'',t0:null,
+  q1:null,q2c1:null,q2c2:null,q2c3:null,
+  q3r1:null,q3r2:null,q3r3:null,
+  q4:null,q5:[],q6:null,
+  q7p1:null,q7p2:null,
+  q8p1:null,q8p2:null,q8p3:null,
+  flags:new Set(),
+  submitted:false
+};
+const dnd={sd:null,sq:null,sn:null};
+let dragChip=null,timerID=null,secsLeft=50*60;
+
+// Q metadata for results
+const QMETA=[
+  {n:1,std:'6.T.T.2.a',lbl:'Key Detail — Source #1',dom:'Techniques',max:1},
+  {n:2,std:'6.T.T.3.a',lbl:'Claim Matching',dom:'Techniques',max:3},
+  {n:3,std:'6.T.RA.2.b',lbl:'Source Attribution',dom:'Research & Analysis',max:3},
+  {n:4,std:'6.T.SS.1.d',lbl:'Craft Introduction',dom:'Structure & Style',max:1},
+  {n:5,std:'6.T.T.1.e',lbl:'Narrative Techniques',dom:'Techniques',max:2},
+  {n:6,std:'6.T.T.3.c',lbl:'Evidence Integration',dom:'Techniques',max:1},
+  {n:7,std:'6.T.SS.1.c',lbl:'Text Cohesion',dom:'Structure & Style',max:2},
+  {n:8,std:'6.L.GC.2.b/c',lbl:'Syntax & Mechanics',dom:'Language',max:3},
+];
+
+// ── AUDIO ─────────────────────────────────────────────
+const SCRIPT=[
+  "Although many people like to swim with dolphins, very few want to swim with great white sharks, the largest predatory fish on Earth.",
+  "Great white sharks are powerful ocean predators with many traits that make them dangerous hunters.",
+  "They can grow up to 20 feet long and weigh over 5,000 pounds according to the U.S. Fish and Wildlife Service, and their large size is matched by their strength.",
+  "Great whites have multiple rows of serrated teeth and strong jaws that can deliver powerful bites, perfect for slicing through flesh.",
+  "They can also swim up to 35 miles per hour, which helps them surprise and attack prey quickly.",
+  "During December 2016, filmmaker Ash Gibb confronted a great white shark near the Western Australian town of Esperance.",
+  "While filming underwater, something collided with Gibb's back.",
+  "It was a great white shark, one that weighed about as much as a sport utility vehicle.",
+  "Gibb controlled his breathing because he did not want to exhibit any fear.",
+  "He reminded himself that sharks don't eat humans on purpose — humans are not their food.",
+  "Although humans are not on the great white shark's menu, inquisitive sharks do sample bite humans.",
+  "Jannick Schroder and his friends encountered a great white shark in March 2017 while fishing off Wrightsville Beach, North Carolina.",
+  "They were reeling in a sandbank shark when a monstrous shadow appeared in the water.",
+  "A great white shark tore off part of the hooked sandbank shark and violently slammed the boat.",
+  "Schroder quickly cut the line so the huge predator would leave.",
+  "The giant squid is another type of ocean predator.",
+  "These animals grow to lengths greater than 30 feet and have eight arms and two long tentacles equipped with powerful suckers ringed with sharp teeth.",
+  "During 2003, French sailors encountered a giant squid while participating in a sailing competition.",
+  "Yachtsman Olivier de Kersauson discovered that a giant squid had latched onto the hull.",
+  "He saw a tentacle through a porthole that was thicker than his leg and really pulling the boat hard.",
+  "Two tentacles blocked the boat's rudder.",
+  "The sailors stopped the boat, and the squid seemed to lose interest and swim away.",
+  "They were relieved because they had no way to frighten the squid."
+];
+let playing=false,paused=false,curSen=0;
+const synth=window.speechSynthesis;
+
+// ── START ─────────────────────────────────────────────
+function startSim(){
+  const nm=document.getElementById('g-name').value.trim();
+  const pr=document.getElementById('g-period').value;
+  let ok=true;
+  document.getElementById('err-name').style.display='none';
+  document.getElementById('err-period').style.display='none';
+  if(!nm){document.getElementById('err-name').style.display='block';ok=false;}
+  if(!pr){document.getElementById('err-period').style.display='block';ok=false;}
+  if(!ok)return;
+  S.name=nm;S.period=pr;
+  S.session='SES-'+Date.now().toString(36).toUpperCase().slice(-8);
+  S.t0=Date.now();
+  document.getElementById('gate').style.display='none';
+  document.getElementById('app').classList.add('visible');
+  document.getElementById('tb-name').textContent=nm+' · '+pr;
+  startTimer();
+}
+
+// ── TIMER ─────────────────────────────────────────────
+function startTimer(){
+  renderTimer();
+  timerID=setInterval(()=>{
+    secsLeft--;renderTimer();
+    if(secsLeft<=0){clearInterval(timerID);autoSubmit();}
+  },1000);
+}
+function renderTimer(){
+  const m=Math.floor(secsLeft/60),s=secsLeft%60;
+  document.getElementById('timer-display').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  const tw=document.getElementById('timer-wrap');
+  tw.className='';
+  if(secsLeft<=60)tw.classList.add('urgent');
+  else if(secsLeft<=300)tw.classList.add('warn');
+}
+function autoSubmit(){doSubmit(true);}
+
+// ── SOURCE TABS ───────────────────────────────────────
+function showSrc(i){
+  document.querySelectorAll('.st').forEach((t,j)=>t.classList.toggle('active',i===j));
+  document.querySelectorAll('.src-view').forEach((v,j)=>v.classList.toggle('active',i===j));
+}
+
+// ── AUDIO ─────────────────────────────────────────────
+function toggleAudio(){if(!playing&&!paused)startAudio();else if(paused)resumeAudio();else pauseAudio();}
+function startAudio(){
+  if(curSen===0){document.getElementById('capPh').style.display='none';buildCaps();}
+  playing=true;paused=false;updatePBtn();speakAt(curSen);
+}
+function pauseAudio(){paused=true;playing=false;synth.cancel();updatePBtn();document.getElementById('ast').textContent='Paused.';}
+function resumeAudio(){paused=false;playing=true;updatePBtn();speakAt(curSen);}
+function replayAudio(){synth.cancel();curSen=0;playing=false;paused=false;document.querySelectorAll('.cap-s').forEach(e=>{e.className='cap-s';});startAudio();}
+function buildCaps(){
+  const a=document.getElementById('capArea');a.innerHTML='';
+  SCRIPT.forEach((s,i)=>{const sp=document.createElement('span');sp.className='cap-s';sp.id='cs'+i;sp.textContent=s+' ';a.appendChild(sp);});
+}
+function speakAt(i){
+  if(i>=SCRIPT.length){audioComplete();return;}
+  if(!playing||paused)return;
+  document.querySelectorAll('.cap-s').forEach((e,j)=>{e.className='cap-s'+(j<i?' done':j===i?' active':'');});
+  const el=document.getElementById('cs'+i);if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});
+  document.getElementById('ast').textContent='Playing… ('+(i+1)+'/'+SCRIPT.length+')';
+  const u=new SpeechSynthesisUtterance(SCRIPT[i]);
+  u.rate=0.92;u.onend=()=>{if(!paused){curSen=i+1;speakAt(curSen);}};
+  u.onerror=()=>{curSen=i+1;speakAt(curSen);};
+  synth.speak(u);
+}
+function audioComplete(){
+  playing=false;paused=false;
+  document.getElementById('playBtn').disabled=true;
+  document.getElementById('pLbl').textContent='Complete';
+  document.getElementById('replayBtn').disabled=false;
+  document.getElementById('ast').textContent='Playback complete.';
+  const ok=document.getElementById('listenOk');ok.style.display='block';
+  document.querySelectorAll('.cap-s').forEach(e=>e.className='cap-s done');
+}
+function updatePBtn(){
+  document.getElementById('pIcon').textContent=playing&&!paused?'⏸':'▶';
+  document.getElementById('pLbl').textContent=playing&&!paused?'Pause':(paused?'Resume':'Play Audio');
+}
+
+// ── PALETTE ───────────────────────────────────────────
+function updatePalette(){
+  for(let i=1;i<=8;i++){
+    const btn=document.getElementById('pb'+i);
+    btn.className='pal-btn';
+    if(isAns(i))btn.classList.add('answered');
+    if(S.flags.has(i))btn.classList.add('flagged');
+  }
+  const n=countAns();
+  document.getElementById('progBar').style.width=(n/8*100)+'%';
+  document.getElementById('progLbl').textContent=n+'/8';
+}
+function isAns(q){
+  if(q===1)return!!S.q1;
+  if(q===2)return!!(S.q2c1&&S.q2c2&&S.q2c3);
+  if(q===3)return!!(S.q3r1&&S.q3r2&&S.q3r3);
+  if(q===4)return!!S.q4;
+  if(q===5)return S.q5.length===2;
+  if(q===6)return!!S.q6;
+  if(q===7)return!!(S.q7p1&&S.q7p2);
+  if(q===8)return!!(S.q8p1&&S.q8p2&&S.q8p3);
+  return false;
+}
+function countAns(){let n=0;for(let i=1;i<=8;i++)if(isAns(i))n++;return n;}
+function scrollToQ(n){
+  const el=document.getElementById('qb'+n);if(!el)return;
+  document.getElementById('q-scroll').scrollTo({top:el.offsetTop-12,behavior:'smooth'});
+  document.querySelectorAll('.qb').forEach(q=>q.classList.remove('current'));
+  el.classList.add('current');
+  document.querySelectorAll('.pal-btn').forEach(b=>b.classList.remove('current'));
+  document.getElementById('pb'+n).classList.add('current');
+}
+
+// ── FLAG ──────────────────────────────────────────────
+function toggleFlag(n){
+  if(S.flags.has(n)){S.flags.delete(n);document.getElementById('fl'+n).classList.remove('flagged');}
+  else{S.flags.add(n);document.getElementById('fl'+n).classList.add('flagged');}
+  updatePalette();
+}
+
+// ── ANSWER HANDLERS ───────────────────────────────────
+function pickSR(q,v,el){
+  if(S.submitted)return;
+  document.getElementById(q+'o').querySelectorAll('.sr-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  S[q]=v;updatePalette();
+}
+function pickMS(v,el){
+  if(S.submitted)return;
+  const i=S.q5.indexOf(v);
+  if(i>-1){S.q5.splice(i,1);el.classList.remove('sel');document.getElementById('ck-'+v).innerHTML='';}
+  else{if(S.q5.length>=2){alert('Select exactly two answers. Deselect one first.');return;}S.q5.push(v);el.classList.add('sel');document.getElementById('ck-'+v).innerHTML='✓';}
+  updatePalette();
+}
+function pickGrid(row,val){if(S.submitted)return;S['q3'+row]=val;updatePalette();}
+function pickBr(el){
+  if(S.submitted)return;
+  const q=el.dataset.q,p=el.dataset.p,v=el.dataset.v;
+  el.closest('.bc').querySelectorAll('.bco').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  S[q+'p'+p]=v;updatePalette();
+}
+
+// ── DRAG & DROP ───────────────────────────────────────
+function ds(e){dragChip=e.target;e.target.classList.add('dragging');e.dataTransfer.setData('text',e.target.id);}
+function de(e){e.target.classList.remove('dragging');}
+function dov(e){e.preventDefault();e.currentTarget.classList.add('over');}
+function dlv(e){e.currentTarget.classList.remove('over');}
+function ddrop(e){
+  e.preventDefault();if(S.submitted)return;
+  const dr=e.currentTarget;dr.classList.remove('over');
+  const cid=e.dataTransfer.getData('text');const chip=document.getElementById(cid);if(!chip)return;
+  const tgt=dr.dataset.t;
+  const prev=dr.dataset.cid;
+  if(prev&&prev!==cid){const pc=document.getElementById(prev);if(pc)pc.classList.remove('placed');}
+  document.querySelectorAll('.dnd-drop').forEach(d=>{if(d.dataset.cid===cid&&d!==dr){d.dataset.cid='';d.textContent='Drop here';d.classList.remove('filled');}});
+  dr.dataset.cid=cid;dr.textContent=chip.textContent;dr.classList.add('filled');chip.classList.add('placed');
+  S.q2c1=null;S.q2c2=null;S.q2c3=null;
+  document.querySelectorAll('.dnd-drop').forEach(d=>{
+    if(!d.dataset.cid)return;const c=document.getElementById(d.dataset.cid);if(!c)return;
+    if(d.dataset.t==='sd')S.q2c1=c.dataset.val;
+    if(d.dataset.t==='sq')S.q2c2=c.dataset.val;
+    if(d.dataset.t==='sn')S.q2c3=c.dataset.val;
+  });
+  updatePalette();
+}
+
+// ── SUBMIT FLOW ───────────────────────────────────────
+function openSubmit(){
+  buildReview();
+  document.getElementById('q-scroll').style.display='none';
+  document.getElementById('s-submit').style.display='block';
+  document.getElementById('s-results').style.display='none';
+}
+function closeSubmit(){
+  document.getElementById('q-scroll').style.display='block';
+  document.getElementById('s-submit').style.display='none';
+}
+function buildReview(){
+  const rows=[
+    {n:'Q1',lbl:'Key Detail — Source #1',done:isAns(1)},
+    {n:'Q2',lbl:'Claim Matching (Drag-Drop)',done:isAns(2)},
+    {n:'Q3',lbl:'Source Attribution Grid',done:isAns(3)},
+    {n:'Q4',lbl:'Revise the Introduction',done:isAns(4)},
+    {n:'Q5',lbl:'Narrative Techniques (Multi-Select)',done:isAns(5)},
+    {n:'Q6',lbl:'Add Supporting Evidence',done:isAns(6)},
+    {n:'Q7',lbl:'Text Cohesion (Brackets)',done:isAns(7)},
+    {n:'Q8',lbl:'Grammar & Syntax (Brackets)',done:isAns(8)},
+  ];
+  document.getElementById('rev-summary').innerHTML=rows.map(r=>`
+    <div class="rev-row">
+      <div style="font-size:13px"><strong>${r.n}</strong> — ${r.lbl}</div>
+      <div class="rev-status ${r.done?'rs-done':'rs-pend'}">${r.done?'✓ Answered':'⚠ Unanswered'}</div>
+    </div>`).join('');
+}
+
+async function doSubmit(auto=false){
+  if(S.submitted)return;
+  clearInterval(timerID);
+  const btn=document.getElementById('subBtn');
+  const st=document.getElementById('submitStatus');
+  btn.disabled=true;btn.textContent='Submitting…';
+  st.textContent='Sending your responses…';
+  const used=Math.round((Date.now()-S.t0)/1000);
+  const payload={
+    studentName:S.name,period:S.period,sessionId:S.session,
+    q1:S.q1,q2_claim1:S.q2c1,q2_claim2:S.q2c2,q2_claim3:S.q2c3,
+    q3_row1:S.q3r1,q3_row2:S.q3r2,q3_row3:S.q3r3,
+    q4:S.q4,q5_ans1:S.q5[0]||null,q5_ans2:S.q5[1]||null,
+    q6:S.q6,q7_ans1:S.q7p1,q7_ans2:S.q7p2,
+    q8_ans1:S.q8p1,q8_ans2:S.q8p2,q8_ans3:S.q8p3,
+    completionSeconds:used,flagged:Array.from(S.flags).join(',')
+  };
+  try{await fetch(WEBAPP,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});st.textContent='✔ Submitted.';}
+  catch(e){st.textContent='⚠ Network error — results shown locally.';}
+  S.submitted=true;
+  setTimeout(()=>showResults(payload,used),600);
+}
+
+// ── SCORING ───────────────────────────────────────────
+function sc2(c1,c2,c3){let s=0;if(c1==='sd')s++;if(c2==='sq')s++;if(c3==='sn')s++;return s;}
+function sc3(r1,r2,r3){let s=0;if(r1==='S3')s++;if(r2==='S2')s++;if(r3==='Bo')s++;return s;}
+function sc5(a1,a2){const sel=[a1,a2].filter(Boolean).sort().join(',');if(sel==='B,D')return 2;const ok=new Set(['B','D']),bad=new Set(['A','C','E']);let p=0;[a1,a2].filter(Boolean).forEach(v=>{if(ok.has(v))p++;if(bad.has(v))p=0;});return Math.min(p,1);}
+function sc7(a1,a2){let s=0;if(a1==='In fact')s++;if(a2==='Additionally')s++;return s;}
+function sc8(a1,a2,a3){let s=0;if(a1==='this species')s++;if(a2==='Because great white sharks can swim at speeds up to 35 miles per hour')s++;if(a3==='U.S. Fish and Wildlife')s++;return s;}
+
+// ── RESULTS ───────────────────────────────────────────
+function showResults(p,usedSecs){
+  const q1s=p.q1==='D'?1:0;
+  const q2s=sc2(p.q2_claim1,p.q2_claim2,p.q2_claim3);
+  const q3s=sc3(p.q3_row1,p.q3_row2,p.q3_row3);
+  const q4s=p.q4==='B'?1:0;
+  const q5s=sc5(p.q5_ans1,p.q5_ans2);
+  const q6s=p.q6==='C'?1:0;
+  const q7s=sc7(p.q7_ans1,p.q7_ans2);
+  const q8s=sc8(p.q8_ans1,p.q8_ans2,p.q8_ans3);
+  const scores=[q1s,q2s,q3s,q4s,q5s,q6s,q7s,q8s];
+  const tot=scores.reduce((a,b)=>a+b,0);
+  const pct=Math.round(tot/16*100);
+
+  // hide submit, show results
+  document.getElementById('q-scroll').style.display='none';
+  document.getElementById('s-submit').style.display='none';
+  document.getElementById('s-results').style.display='block';
+
+  // hero
+  document.getElementById('rPct').textContent=pct+'%';
+  document.getElementById('rPts').textContent=tot+' / 16 points';
+  document.getElementById('rName').textContent=S.name;
+  document.getElementById('rPeriod').textContent=S.period;
+  document.getElementById('rAns').textContent=countAns();
+  document.getElementById('rFlagged').textContent=S.flags.size;
+  const mm=Math.floor(usedSecs/60),ss=usedSecs%60;
+  document.getElementById('rTime').textContent=mm+'m '+ss+'s';
+
+  let band,bc;
+  if(pct>=90){band='Distinguished Learner';bc='b-d';}
+  else if(pct>=70){band='Proficient Learner';bc='b-p';}
+  else if(pct>=50){band='Developing Learner';bc='b-dev';}
+  else{band='Beginning Learner';bc='b-b';}
+  const be=document.getElementById('rBand');be.textContent=band;be.className='sh-band '+bc;
+
+  // domain chart
+  const domains={
+    'Texts: Techniques':{qs:[1,2,5,6],earned:0,max:0},
+    'Texts: Research & Analysis':{qs:[3],earned:0,max:0},
+    'Texts: Structure & Style':{qs:[4,7],earned:0,max:0},
+    'Language':{qs:[8],earned:0,max:0},
+  };
+  QMETA.forEach((q,i)=>{
+    const dk=Object.keys(domains).find(k=>domains[k].qs.includes(q.n));
+    if(dk){domains[dk].earned+=scores[i];domains[dk].max+=q.max;}
+  });
+  const domColors=['#0c2340','#0a8f84','#163352','#1e4976'];
+  document.getElementById('domainBars').innerHTML=Object.entries(domains).map(([lbl,d],i)=>{
+    const dp=d.max?Math.round(d.earned/d.max*100):0;
+    return`<div class="dc-row">
+      <div class="dc-lbl">${lbl}</div>
+      <div class="dc-bar-outer"><div class="dc-bar-inner" style="width:${dp}%;background:${domColors[i]}">${dp>15?dp+'%':''}</div></div>
+      <div class="dc-pct">${dp}%</div>
+    </div>`;
+  }).join('');
+
+  // answer review — right/wrong only, no correct answer shown
+  document.getElementById('arGrid').innerHTML=QMETA.map((q,i)=>{
+    const s=scores[i],m=q.max;
+    const cl=s===m?'ok':s>0?'partial':'bad';
+    const icon=s===m?'✓':s>0?'~':'✗';
+    const lbl=s===m?'Correct':s>0?'Partial':'Incorrect';
+    return`<div class="ar-item ${cl}">
+      <div class="ar-qn">Question ${q.n}</div>
+      <div class="ar-icon">${icon}</div>
+      <div class="ar-lbl">${lbl}</div>
+      <div class="ar-std">${q.std}</div>
+      <div class="ar-pts">${s}/${m} pts</div>
+    </div>`;
+  }).join('');
+
+  // flagged vocab
+  const fr=document.getElementById('frList');
+  if(S.flags.size===0){fr.innerHTML='<div class="fr-none">No items were flagged.</div>';}
+  else{
+    fr.innerHTML=Array.from(S.flags).sort((a,b)=>a-b).map(n=>{
+      const q=QMETA[n-1];
+      return`<div class="fr-item"><div><span class="fr-q">Question ${n}</span> — ${q.lbl}</div><div class="fr-std">${q.std} · ${q.dom}</div></div>`;
+    }).join('');
+  }
+
+  // apply right/wrong to actual question blocks (but not show correct answer)
+  QMETA.forEach((q,i)=>{
+    const blk=document.getElementById('qb'+q.n);
+    if(!blk)return;
+    if(scores[i]===q.max)blk.classList.add('ans-correct');
+    else if(scores[i]<q.max)blk.classList.add('ans-incorrect');
+    const fb=document.getElementById('fb'+q.n);
+    if(!fb)return;
+    fb.className='fb show '+(scores[i]===q.max?'fb-ok':'fb-bad');
+    fb.innerHTML=`<span class="fb-icon">${scores[i]===q.max?'✓':'✗'}</span> <span>${scores[i]===q.max?'Correct — well done!':'Incorrect — review this item with your teacher.'} (${scores[i]}/${q.max} pts)</span>`;
+  });
+}
+</script>
+</body>
+</html>
